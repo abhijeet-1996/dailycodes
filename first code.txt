@@ -1,0 +1,62 @@
+import java.util.*;
+class account
+{
+    private int bal;
+    public account(int a)
+    {
+        bal=a;
+    }
+    public boolean isBalanceSufficient(int amt)
+{
+    if(bal>=amt)
+    return true;
+    else
+    return false;
+}
+public void withdraw(int amt)
+{
+    bal=bal-amt;
+    System.out.println("withdrawal amount is "+amt);
+    System.out.println("ramaining balance is "+bal);
+}
+}
+class customer implements Runnable
+{
+    private account a;
+    private String name;
+    public customer(account m,String b)
+    {
+        a=m;
+        name=b;
+    }
+    public void run()
+    {
+     synchronized (a)
+     {
+     Scanner s=new Scanner(System.in);
+     System.out.println(name+"please enter the withdrawal amount");
+     int amt=s.nextInt();
+     if(a.isBalanceSufficient(amt))
+     {
+         a.withdraw(amt);
+     }
+     else
+     {
+         System.out.println("insufficient balance");
+     }
+         
+     }
+    }
+}
+public class Main
+{
+	public static void main(String[] args)
+	{
+	    account a1=new account(1000);
+	    customer c1=new customer(a1,"abhijeet"),c2=new customer(a1,"samarth");
+	    Thread t1=new Thread(c1);
+	    Thread t2=new Thread(c2);
+	    t1.start();
+	    t2.start();
+	}
+}
