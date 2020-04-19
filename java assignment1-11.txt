@@ -1,0 +1,31 @@
+import java.util.*;
+class sample2
+{
+    private int var;
+    public sample2()
+    {
+    }
+    public sample2(int a)
+    {
+        var=a;
+    }
+    public void getvar()
+    {
+        System.out.println("value of var "+var);
+    }
+    public void fun(sample2 ref)
+    {
+       var=ref.var; 
+    }
+}
+public class Main
+{
+    public static void main(String args[])
+    {
+    sample2 s=new sample2();
+      sample2 s1=new sample2(999);
+      s.getvar();
+      s.fun(s1);
+      s1.getvar();
+    }
+}
