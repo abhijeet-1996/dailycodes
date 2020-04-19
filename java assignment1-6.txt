@@ -1,0 +1,20 @@
+import java.util.*;
+class sample1
+{
+    private int var;
+    {
+        var=33;
+    }
+    public void getvar()
+    {
+        System.out.println("value of var "+var);
+    }
+}
+public class Main
+{
+    public static void main(String args[])
+    {
+      sample1 s=new sample1();
+      s.getvar();
+    }
+}
