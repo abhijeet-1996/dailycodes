@@ -1,0 +1,27 @@
+create table Fare
+(id int primary key auto_increment,
+vehicleType enum('CAR','LCV','TRUCK','TRAILER'),
+fareAmount decimal(10,2)); 
+insert into Fare (vehicleType,fareAmount)values('CAR',30),('LCV',50),('TRUCK',100),('TRAILER',500);
+create table OldFare
+(id int primary key auto_increment,
+vehicleType enum('CAR','LCV','TRUCK','TRAILER'),
+fareAmount decimal(10,2),dateChanges date);
+delimiter $$
+create trigger check1  before update on Fare for each row
+begin
+if new.fareAmount<old.fareAmount then
+set new.fareAmount=old.fareAmount;
+end if;
+end $$
+delimiter $$
+create trigger update2 
+before update on Fare
+for each row 
+begin
+if new.fareAmount>old.fareAmount then
+insert into OldFare(vehicleType,fareAmount,dateChanges) value(old.vehicleType,old.fareAmount,now());
+end if;
+end$$
+update fare set fareAmount=50 where vehicleType='car';
+select*from OldFare;
